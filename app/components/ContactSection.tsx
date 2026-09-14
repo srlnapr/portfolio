@@ -17,16 +17,16 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-const EMAILJS_SERVICE_ID  = "service_25e38uy";
+const EMAILJS_SERVICE_ID = "service_25e38uy";
 const EMAILJS_TEMPLATE_ID = "template_dve297g";
-const EMAILJS_PUBLIC_KEY  = "ZJJ-nG-YQe5a05MtL";
+const EMAILJS_PUBLIC_KEY = "ZJJ-nG-YQe5a05MtL";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const sendBtnRef = useRef<HTMLButtonElement>(null);
-  const formRef    = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -241,7 +241,7 @@ export default function ContactSection() {
               <div>
                 <span className="text-xs text-gray-400 font-medium block">Location</span>
                 <span className="font-semibold text-sm text-gray-700">
-                  San Francisco, CA / Remote Worldwide
+                  Purwokerto / Remote Worldwide
                 </span>
               </div>
             </div>
@@ -335,11 +335,10 @@ export default function ContactSection() {
                     }}
                     placeholder="Jane Doe"
                     disabled={status === "submitting"}
-                    className={`w-full px-4 py-3 rounded-xl bg-white border text-sm text-[#333333] transition-all focus:outline-none ${
-                      fieldErrors.name
+                    className={`w-full px-4 py-3 rounded-xl bg-white border text-sm text-[#333333] transition-all focus:outline-none ${fieldErrors.name
                         ? "border-red-400 ring-2 ring-red-100"
                         : "border-pink-200/80 focus:border-pink-500 focus:ring-2 focus:ring-pink-100"
-                    }`}
+                      }`}
                   />
                   {fieldErrors.name && (
                     <p className="text-[11px] text-red-500 mt-1 font-medium">{fieldErrors.name}</p>
@@ -363,11 +362,10 @@ export default function ContactSection() {
                     }}
                     placeholder="jane@example.com"
                     disabled={status === "submitting"}
-                    className={`w-full px-4 py-3 rounded-xl bg-white border text-sm text-[#333333] transition-all focus:outline-none ${
-                      fieldErrors.email
+                    className={`w-full px-4 py-3 rounded-xl bg-white border text-sm text-[#333333] transition-all focus:outline-none ${fieldErrors.email
                         ? "border-red-400 ring-2 ring-red-100"
                         : "border-pink-200/80 focus:border-pink-500 focus:ring-2 focus:ring-pink-100"
-                    }`}
+                      }`}
                   />
                   {fieldErrors.email && (
                     <p className="text-[11px] text-red-500 mt-1 font-medium">{fieldErrors.email}</p>
@@ -397,11 +395,10 @@ export default function ContactSection() {
                   }}
                   placeholder="Tell me about your project, timeline, or just say hello..."
                   disabled={status === "submitting"}
-                  className={`w-full px-4 py-3 rounded-xl bg-white border text-sm text-[#333333] resize-none transition-all focus:outline-none ${
-                    fieldErrors.message
+                  className={`w-full px-4 py-3 rounded-xl bg-white border text-sm text-[#333333] resize-none transition-all focus:outline-none ${fieldErrors.message
                       ? "border-red-400 ring-2 ring-red-100"
                       : "border-pink-200/80 focus:border-pink-500 focus:ring-2 focus:ring-pink-100"
-                  }`}
+                    }`}
                 />
                 {fieldErrors.message && (
                   <p className="text-[11px] text-red-500 mt-1 font-medium">{fieldErrors.message}</p>

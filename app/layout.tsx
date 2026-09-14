@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   title: "Serlin — Multidisciplinary Developer & Data Practitioner | helloserlin.id",
   description:
     "I design and develop responsive web platforms and robust machine learning pipelines. Bridging user-centric interfaces with deep data systems to solve real-world problems.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

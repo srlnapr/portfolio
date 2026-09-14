@@ -7,31 +7,127 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-const timelineItems = [
+interface TimelineItem {
+  period: string;
+  title: string;
+  company: string;
+  companyColor: string;
+  dotColor: string;
+  dotBg: string;
+  icon: string;
+  type: "work" | "education";
+  bullets: string[];
+}
+
+const timelineItems: TimelineItem[] = [
   {
-    period: "2022 - Present",
-    title: "Senior Creative Technologist / Frontend Lead",
-    company: "TechNova Studio",
-    companyColor: "text-pink-500",
-    dotColor: "bg-pink-500",
-    description:
-      "Led frontend architecture and integrated AI-driven design systems into core application stacks, slashing developer prototyping cycles by 40%.",
+    period: "Aug 2026 – Present",
+    title: "SPARK ShopeePay Ambassador",
+    company: "ShopeePay",
+    companyColor: "text-orange-500",
+    dotColor: "bg-orange-400",
+    dotBg: "bg-orange-50",
+    icon: "🛍️",
+    type: "work",
+    bullets: [
+      "Representing the brand on campus, driving community engagement, and executing strategic promotional campaigns for digital payments.",
+      "Collaborating with teams to organize on-ground activities and boost active platform adoption among students.",
+    ],
   },
   {
-    period: "2019 - 2022",
-    title: "Data & Machine Learning Engineer",
-    company: "DataSync Inc.",
-    companyColor: "text-pink-400",
-    dotColor: "bg-pink-400",
-    description:
-      "Engineered scalable data extraction pipelines, fine-tuned sentiment NLP models, and published low-latency inference services serving 500K+ monthly queries.",
+    period: "Jun 2026 – Present",
+    title: "Student Staff Akademik TUP",
+    company: "Universitas Telkom Purwokerto",
+    companyColor: "text-blue-500",
+    dotColor: "bg-blue-400",
+    dotBg: "bg-blue-50",
+    icon: "🏫",
+    type: "work",
+    bullets: [
+      "Assisting academic administration tasks, data management, and student service operations efficiently.",
+      "Coordinating communication channels between students and academic faculty to ensure smooth workflow.",
+    ],
+  },
+  {
+    period: "Apr 2026 – Present",
+    title: "MarketDay 4.0 – Staff Divisi Media Creative",
+    company: "MarketDay Telkom University Purwokerto",
+    companyColor: "text-purple-500",
+    dotColor: "bg-purple-400",
+    dotBg: "bg-purple-50",
+    icon: "🎨",
+    type: "work",
+    bullets: [
+      "Designing promotional and publication content for social media.",
+      "Collaborating on visual identity and branding development.",
+      "Creating engaging creative designs to boost participant awareness.",
+    ],
+  },
+  {
+    period: "Oct 2025 – Present",
+    title: "Education AI",
+    company: "Google Developer Groups On Campus – Telkom University Purwokerto",
+    companyColor: "text-green-600",
+    dotColor: "bg-green-400",
+    dotBg: "bg-green-50",
+    icon: "🤖",
+    type: "work",
+    bullets: [
+      "Curriculum Development: Structuring modules and learning materials regarding Artificial Intelligence.",
+      "Technical Mentoring: Facilitating learning sessions and breaking down complex AI concepts for members.",
+      "Knowledge Sharing: Driving active interaction and enthusiasm among IT community members.",
+    ],
+  },
+  {
+    period: "Jul 2025 – Nov 2025",
+    title: "Telu Leadermind Competition – Staff PDD",
+    company: "Telu Leadermind Competition",
+    companyColor: "text-pink-500",
+    dotColor: "bg-pink-500",
+    dotBg: "bg-pink-50",
+    icon: "🏆",
+    type: "work",
+    bullets: [
+      "Brand Identity: Developing official event logos reflecting the competition's core essence.",
+      "Content Creation: Designing informative and engaging social media feed assets to maximize event awareness.",
+    ],
+  },
+  {
+    period: "Jul 2024 – Nov 2024",
+    title: "Magang Digital Marketing",
+    company: "Campus Digital",
+    companyColor: "text-sky-500",
+    dotColor: "bg-sky-400",
+    dotBg: "bg-sky-50",
+    icon: "📣",
+    type: "work",
+    bullets: [
+      "Acting as social media content talent and managing digital marketing campaigns.",
+      "Utilizing collaboration and design tools like Canva and Google Workspace.",
+      "Performing content analytics and preparing evaluation reports.",
+    ],
+  },
+  {
+    period: "2025 – Present",
+    title: "S1 Teknik Informatika",
+    company: "Universitas Telkom Purwokerto",
+    companyColor: "text-indigo-500",
+    dotColor: "bg-indigo-400",
+    dotBg: "bg-indigo-50",
+    icon: "🎓",
+    type: "education",
+    bullets: [
+      "Excellence Scholarship Recipient: Successfully secured a full merit-based scholarship.",
+      "Focus: Actively expanding capacity in artificial intelligence, software engineering, and modern web development.",
+    ],
   },
 ];
 
 const achievements = [
-  { emoji: "🏆", label: "AWS Certified Machine Learning", symbol: "✦" },
-  { emoji: "🥇", label: "1st Place Hackathon 2023", symbol: "✨" },
-  { emoji: "🎨", label: "Best UX Design Award", symbol: "♡" },
+  { emoji: "🎓", label: "Excellence Scholarship Recipient", symbol: "✦" },
+  { emoji: "🤖", label: "GDGoC Education AI Member", symbol: "✨" },
+  { emoji: "🛍️", label: "ShopeePay Campus Ambassador", symbol: "♡" },
+  { emoji: "🎨", label: "Creative Media & Design", symbol: "✧" },
 ];
 
 export default function ExperienceSection() {
@@ -39,68 +135,92 @@ export default function ExperienceSection() {
 
   useGSAP(
     () => {
-      // Left sticky header entrance
-      gsap.from(".exp-header", {
-        y: 50,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".exp-header",
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      });
+      // ── Left sticky header entrance ──────────────────────────────────────
+      gsap.fromTo(
+        ".exp-header",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".exp-header",
+            // end is anchored to the BOTTOM of the whole section so the
+            // text only reverses after the last card has left the screen
+            endTrigger: sectionRef.current,
+            start: "top 87%",
+            end: "bottom 20%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
 
-      // Timeline items slide in from right
-      gsap.from(".timeline-item", {
-        x: 50,
-        opacity: 0,
-        duration: 0.7,
-        stagger: 0.25,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".timeline-container",
-          start: "top 80%",
-          toggleActions: "play none none none",
-        },
-      });
-
-      // Timeline line draws down
-      gsap.from(".timeline-line", {
-        scaleY: 0,
-        transformOrigin: "top",
-        duration: 1.2,
-        ease: "power2.out",
+      // ── Timeline line: grows with scroll (scrub) ─────────────────────────
+      // Set initial state
+      gsap.set(".timeline-line", { scaleY: 0, transformOrigin: "top center" });
+      gsap.to(".timeline-line", {
+        scaleY: 1,
+        ease: "none",
         scrollTrigger: {
           trigger: ".timeline-container",
           start: "top 80%",
-          toggleActions: "play none none none",
+          end: "bottom 60%",
+          scrub: 0.6,
         },
       });
 
-      // Achievement badges pop in
-      gsap.from(".achievement-badge", {
-        y: 20,
-        opacity: 0,
-        scale: 0.85,
-        stagger: 0.12,
-        duration: 0.5,
-        ease: "back.out(1.4)",
-        scrollTrigger: {
-          trigger: ".achievements-container",
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
+      // ── Per-card fade-up on scroll ───────────────────────────────────────
+      // Each card gets its own ScrollTrigger so they reveal one-by-one
+      const cards = gsap.utils.toArray<HTMLElement>(".timeline-item");
+      cards.forEach((card, i) => {
+        gsap.fromTo(
+          card,
+          { y: 48, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 88%",
+              end: "top 20%",
+              toggleActions: "play reverse play reverse",
+            },
+            delay: i === 0 ? 0.1 : 0,
+          }
+        );
       });
 
-      // Hover on achievement badges
-      const badges = sectionRef.current?.querySelectorAll(".achievement-badge");
+      // ── Achievement badges pop in ────────────────────────────────────────
+      gsap.fromTo(
+        ".achievement-badge",
+        { y: 20, opacity: 0, scale: 0.88 },
+        {
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          stagger: 0.1,
+          duration: 0.5,
+          ease: "back.out(1.4)",
+          scrollTrigger: {
+            trigger: ".achievements-container",
+            start: "top 88%",
+            end: "top 20%",
+            toggleActions: "play reverse play reverse",
+          },
+        }
+      );
+
+      // ── Badge hover (CSS-free scale pop) ────────────────────────────────
+      const badges =
+        sectionRef.current?.querySelectorAll<HTMLElement>(".achievement-badge");
       badges?.forEach((badge) => {
         const onEnter = () =>
-          gsap.to(badge, { scale: 1.08, duration: 0.25, ease: "power2.out" });
+          gsap.to(badge, { scale: 1.08, duration: 0.22, ease: "power2.out" });
         const onLeave = () =>
-          gsap.to(badge, { scale: 1, duration: 0.25, ease: "power2.out" });
+          gsap.to(badge, { scale: 1, duration: 0.22, ease: "power2.out" });
         badge.addEventListener("mouseenter", onEnter);
         badge.addEventListener("mouseleave", onLeave);
       });
@@ -147,8 +267,8 @@ export default function ExperienceSection() {
               <span className="inline-block text-pink-400 text-2xl ml-2">✿</span>
             </h2>
             <p className="text-lg text-gray-500 mb-8 leading-relaxed">
-              A timeline of my professional journey in engineering and machine
-              learning.
+              A timeline of my campus journey — from ambassador roles and
+              creative media, to AI communities and digital marketing.
             </p>
             <div className="hidden lg:flex flex-col gap-2.5">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-pink-50 border border-pink-100 text-pink-600 font-semibold text-[11px] w-fit -rotate-2 shadow-sm">
@@ -165,33 +285,52 @@ export default function ExperienceSection() {
       {/* Right timeline */}
       <div className="lg:col-span-8 space-y-16">
         <div className="timeline-container relative">
-          <div className="timeline-line absolute left-[15px] top-2 bottom-2 w-[2px] bg-pink-100" />
+          {/* Vertical line — grows via GSAP scrub */}
+          <div className="absolute left-[19px] top-3 bottom-3 w-[2px] overflow-hidden rounded-full">
+            <div className="timeline-line w-full h-full bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100 will-change-transform" />
+          </div>
           <div className="space-y-12">
             {timelineItems.map((item) => (
               <div
                 key={item.period}
                 className="timeline-item relative flex gap-8 items-start"
               >
-                <div className="flex flex-col items-center mt-1 relative z-10">
-                  <div className="w-8 h-8 rounded-full bg-pink-100 border-4 border-white shadow-sm flex items-center justify-center">
-                    <div className={`w-2 h-2 rounded-full ${item.dotColor}`} />
+                {/* Dot with icon */}
+                <div className="flex flex-col items-center mt-1 relative z-10 shrink-0">
+                  <div className={`w-9 h-9 rounded-full ${item.dotBg} border-4 border-white shadow-sm flex items-center justify-center text-base`}>
+                    {item.icon}
                   </div>
                 </div>
-                <div className="flex-1 bg-white rounded-2xl p-6 border border-pink-100 shadow-[0_4px_20px_rgb(244,114,182,0.05)]">
-                  <div className="inline-block px-3 py-1 rounded-full bg-gray-50 text-gray-500 font-semibold text-[12px] mb-2 border border-gray-200">
-                    {item.period}
+                {/* Card */}
+                <div className="flex-1 bg-white rounded-2xl p-6 border border-pink-100 shadow-[0_4px_20px_rgb(244,114,182,0.05)] hover:shadow-[0_8px_30px_rgb(244,114,182,0.10)] hover:border-pink-200 transition-all duration-300">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <span className="inline-block px-3 py-1 rounded-full bg-gray-50 text-gray-500 font-semibold text-[12px] border border-gray-200">
+                      {item.period}
+                    </span>
+                    <span
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                        item.type === "education"
+                          ? "bg-indigo-50 text-indigo-500 border border-indigo-100"
+                          : "bg-pink-50 text-pink-500 border border-pink-100"
+                      }`}
+                    >
+                      {item.type === "education" ? "Education" : "Work"}
+                    </span>
                   </div>
-                  <h3 className="font-semibold text-xl leading-[1.4] text-[#333333]">
+                  <h3 className="font-semibold text-[18px] leading-[1.4] text-[#333333]">
                     {item.title}
                   </h3>
-                  <div
-                    className={`font-semibold ${item.companyColor} mt-1 mb-3`}
-                  >
+                  <div className={`font-semibold text-sm ${item.companyColor} mt-1 mb-4`}>
                     {item.company}
                   </div>
-                  <p className="text-base leading-relaxed text-gray-500">
-                    {item.description}
-                  </p>
+                  <ul className="space-y-2">
+                    {item.bullets.map((bullet, i) => (
+                      <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-gray-500">
+                        <span className="text-pink-400 mt-[3px] shrink-0">✦</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </div>
             ))}
@@ -201,7 +340,7 @@ export default function ExperienceSection() {
         {/* Achievements */}
         <div className="achievements-container">
           <h3 className="font-semibold text-xl leading-[1.4] text-[#333333] mb-6">
-            Key Achievements &amp; Certifications
+            Key Highlights &amp; Achievements
           </h3>
           <div className="flex flex-wrap gap-3">
             {achievements.map((a) => (

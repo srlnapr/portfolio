@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -16,11 +17,16 @@ import {
   ExternalLink,
 } from "lucide-react";
 
+const EMAILJS_SERVICE_ID  = "service_25e38uy";
+const EMAILJS_TEMPLATE_ID = "template_dve297g";
+const EMAILJS_PUBLIC_KEY  = "ZJJ-nG-YQe5a05MtL";
+
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const sendBtnRef = useRef<HTMLButtonElement>(null);
+  const formRef    = useRef<HTMLFormElement>(null);
 
   // Form State
   const [formData, setFormData] = useState({
@@ -129,32 +135,22 @@ export default function ContactSection() {
     setErrorMsg("");
 
     if (!validateForm()) return;
+    if (!formRef.current) return;
 
     setStatus("submitting");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to send message.");
-      }
-
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
       setStatus("success");
     } catch (err) {
-      console.error("Submission failed:", err);
-      // If API fails or offline, provide graceful feedback with mailto fallback
+      console.error("EmailJS error:", err);
       setErrorMsg(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong. You can also contact me directly via email."
+        "Gagal mengirim pesan. Coba lagi atau hubungi langsung lewat email."
       );
       setStatus("error");
     }
@@ -308,7 +304,7 @@ export default function ContactSection() {
             </div>
           ) : (
             /* Interactive Contact Form */
-            <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+            <form ref={formRef} className="space-y-4" onSubmit={handleSubmit} noValidate>
               {status === "error" && errorMsg && (
                 <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs sm:text-sm font-medium flex items-center justify-between gap-2">
                   <span>{errorMsg}</span>
@@ -329,6 +325,7 @@ export default function ContactSection() {
                   </label>
                   <input
                     id="contact-name"
+                    name="from_name"
                     type="text"
                     required
                     value={formData.name}
@@ -356,6 +353,7 @@ export default function ContactSection() {
                   </label>
                   <input
                     id="contact-email"
+                    name="from_email"
                     type="email"
                     required
                     value={formData.email}
@@ -389,6 +387,7 @@ export default function ContactSection() {
                 </div>
                 <textarea
                   id="contact-message"
+                  name="message"
                   required
                   rows={4}
                   value={formData.message}
@@ -414,7 +413,7 @@ export default function ContactSection() {
                 ref={sendBtnRef}
                 type="submit"
                 disabled={status === "submitting"}
-                className="contact-field w-full py-3.5 sm:py-4 bg-pink-500 hover:bg-pink-600 disabled:opacity-75 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-xl transition-all shadow-md shadow-pink-200 flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3.5 sm:py-4 bg-pink-500 hover:bg-pink-600 disabled:opacity-75 disabled:cursor-not-allowed text-white font-semibold text-sm rounded-xl transition-all shadow-md shadow-pink-200 flex items-center justify-center gap-2 cursor-pointer"
               >
                 {status === "submitting" ? (
                   <>

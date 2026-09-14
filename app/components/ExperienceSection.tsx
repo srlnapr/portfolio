@@ -138,26 +138,22 @@ export default function ExperienceSection() {
       // ── Left sticky header entrance ──────────────────────────────────────
       gsap.fromTo(
         ".exp-header",
-        { y: 40, opacity: 0 },
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 0.8,
+          duration: 0.7,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".exp-header",
-            // end is anchored to the BOTTOM of the whole section so the
-            // text only reverses after the last card has left the screen
-            endTrigger: sectionRef.current,
-            start: "top 87%",
-            end: "bottom 20%",
-            toggleActions: "play reverse play reverse",
+            start: "top 88%",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
 
       // ── Timeline line: grows with scroll (scrub) ─────────────────────────
-      // Set initial state
       gsap.set(".timeline-line", { scaleY: 0, transformOrigin: "top center" });
       gsap.to(".timeline-line", {
         scaleY: 1,
@@ -165,30 +161,29 @@ export default function ExperienceSection() {
         scrollTrigger: {
           trigger: ".timeline-container",
           start: "top 80%",
-          end: "bottom 60%",
-          scrub: 0.6,
+          end: "bottom 75%",
+          scrub: 0.5,
         },
       });
 
       // ── Per-card fade-up on scroll ───────────────────────────────────────
-      // Each card gets its own ScrollTrigger so they reveal one-by-one
       const cards = gsap.utils.toArray<HTMLElement>(".timeline-item");
       cards.forEach((card, i) => {
         gsap.fromTo(
           card,
-          { y: 48, opacity: 0 },
+          { y: 36, opacity: 0 },
           {
             y: 0,
             opacity: 1,
-            duration: 0.55,
+            duration: 0.5,
             ease: "power3.out",
             scrollTrigger: {
               trigger: card,
-              start: "top 88%",
-              end: "top 20%",
-              toggleActions: "play reverse play reverse",
+              start: "top 90%",
+              toggleActions: "play none none none",
+              once: true,
             },
-            delay: i === 0 ? 0.1 : 0,
+            delay: i === 0 ? 0.05 : 0,
           }
         );
       });
@@ -196,19 +191,19 @@ export default function ExperienceSection() {
       // ── Achievement badges pop in ────────────────────────────────────────
       gsap.fromTo(
         ".achievement-badge",
-        { y: 20, opacity: 0, scale: 0.88 },
+        { y: 20, opacity: 0, scale: 0.9 },
         {
           y: 0,
           opacity: 1,
           scale: 1,
-          stagger: 0.1,
-          duration: 0.5,
+          stagger: 0.08,
+          duration: 0.45,
           ease: "back.out(1.4)",
           scrollTrigger: {
             trigger: ".achievements-container",
-            start: "top 88%",
-            end: "top 20%",
-            toggleActions: "play reverse play reverse",
+            start: "top 90%",
+            toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -218,9 +213,9 @@ export default function ExperienceSection() {
         sectionRef.current?.querySelectorAll<HTMLElement>(".achievement-badge");
       badges?.forEach((badge) => {
         const onEnter = () =>
-          gsap.to(badge, { scale: 1.08, duration: 0.22, ease: "power2.out" });
+          gsap.to(badge, { scale: 1.05, duration: 0.2, ease: "power2.out" });
         const onLeave = () =>
-          gsap.to(badge, { scale: 1, duration: 0.22, ease: "power2.out" });
+          gsap.to(badge, { scale: 1, duration: 0.2, ease: "power2.out" });
         badge.addEventListener("mouseenter", onEnter);
         badge.addEventListener("mouseleave", onLeave);
       });
@@ -232,11 +227,11 @@ export default function ExperienceSection() {
     <section
       ref={sectionRef}
       id="experience"
-      className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24"
+      className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-24"
     >
       {/* Left sticky header */}
       <div className="lg:col-span-4">
-        <div className="sticky top-32">
+        <div className="lg:sticky lg:top-32">
           <div className="exp-header">
             <div className="inline-flex items-center gap-2 px-3 py-1 mb-4 rounded-full bg-pink-50 border border-pink-100 shadow-sm">
               <span className="text-pink-400">✧</span>
@@ -245,7 +240,7 @@ export default function ExperienceSection() {
               </span>
               <span className="text-pink-400">✦</span>
             </div>
-            <h2 className="font-extrabold text-4xl lg:text-5xl text-[#333333] mb-6 relative leading-[1.1] tracking-tight">
+            <h2 className="font-extrabold text-3xl sm:text-4xl lg:text-5xl text-[#333333] mb-4 sm:mb-6 relative leading-[1.15] tracking-tight">
               Experience &amp;
               <br />
               <span className="relative inline-block text-pink-600">
@@ -264,9 +259,9 @@ export default function ExperienceSection() {
                   />
                 </svg>
               </span>
-              <span className="inline-block text-pink-400 text-2xl ml-2">✿</span>
+              <span className="inline-block text-pink-400 text-xl sm:text-2xl ml-2">✿</span>
             </h2>
-            <p className="text-lg text-gray-500 mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-500 mb-6 sm:mb-8 leading-relaxed">
               A timeline of my campus journey — from ambassador roles and
               creative media, to AI communities and digital marketing.
             </p>
@@ -283,32 +278,32 @@ export default function ExperienceSection() {
       </div>
 
       {/* Right timeline */}
-      <div className="lg:col-span-8 space-y-16">
+      <div className="lg:col-span-8 space-y-12 sm:space-y-16">
         <div className="timeline-container relative">
-          {/* Vertical line — grows via GSAP scrub */}
-          <div className="absolute left-[19px] top-3 bottom-3 w-[2px] overflow-hidden rounded-full">
-            <div className="timeline-line w-full h-full bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100 will-change-transform" />
+          {/* Vertical line — grows via GSAP scrub, accurately centered on dots */}
+          <div className="absolute left-[15px] sm:left-[17px] top-3 bottom-3 w-[2px] overflow-hidden rounded-full">
+            <div className="timeline-line w-full h-full bg-gradient-to-b from-pink-300 via-pink-200 to-pink-100 will-change-transform origin-top" />
           </div>
-          <div className="space-y-12">
+          <div className="space-y-6 sm:space-y-10 md:space-y-12">
             {timelineItems.map((item) => (
               <div
                 key={item.period}
-                className="timeline-item relative flex gap-8 items-start"
+                className="timeline-item relative flex gap-3.5 sm:gap-6 lg:gap-8 items-start"
               >
                 {/* Dot with icon */}
-                <div className="flex flex-col items-center mt-1 relative z-10 shrink-0">
-                  <div className={`w-9 h-9 rounded-full ${item.dotBg} border-4 border-white shadow-sm flex items-center justify-center text-base`}>
+                <div className="w-8 sm:w-9 flex justify-center mt-1 relative z-10 shrink-0">
+                  <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full ${item.dotBg} border-2 sm:border-4 border-white shadow-xs flex items-center justify-center text-sm sm:text-base`}>
                     {item.icon}
                   </div>
                 </div>
                 {/* Card */}
-                <div className="flex-1 bg-white rounded-2xl p-6 border border-pink-100 shadow-[0_4px_20px_rgb(244,114,182,0.05)] hover:shadow-[0_8px_30px_rgb(244,114,182,0.10)] hover:border-pink-200 transition-all duration-300">
-                  <div className="flex flex-wrap items-center gap-2 mb-2">
-                    <span className="inline-block px-3 py-1 rounded-full bg-gray-50 text-gray-500 font-semibold text-[12px] border border-gray-200">
+                <div className="flex-1 min-w-0 bg-white rounded-2xl p-4 sm:p-6 border border-pink-100 shadow-[0_4px_20px_rgb(244,114,182,0.05)] hover:shadow-[0_8px_30px_rgb(244,114,182,0.10)] hover:border-pink-200 transition-all duration-300">
+                  <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2">
+                    <span className="inline-block px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-gray-50 text-gray-500 font-semibold text-[11px] sm:text-[12px] border border-gray-200">
                       {item.period}
                     </span>
                     <span
-                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                      className={`inline-block px-2 sm:px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-bold uppercase tracking-wider ${
                         item.type === "education"
                           ? "bg-indigo-50 text-indigo-500 border border-indigo-100"
                           : "bg-pink-50 text-pink-500 border border-pink-100"
@@ -317,17 +312,17 @@ export default function ExperienceSection() {
                       {item.type === "education" ? "Education" : "Work"}
                     </span>
                   </div>
-                  <h3 className="font-semibold text-[18px] leading-[1.4] text-[#333333]">
+                  <h3 className="font-semibold text-base sm:text-[18px] leading-[1.35] text-[#333333] break-words">
                     {item.title}
                   </h3>
-                  <div className={`font-semibold text-sm ${item.companyColor} mt-1 mb-4`}>
+                  <div className={`font-semibold text-xs sm:text-sm ${item.companyColor} mt-1 mb-3 sm:mb-4 break-words`}>
                     {item.company}
                   </div>
-                  <ul className="space-y-2">
+                  <ul className="space-y-1.5 sm:space-y-2">
                     {item.bullets.map((bullet, i) => (
-                      <li key={i} className="flex gap-2.5 text-sm leading-relaxed text-gray-500">
-                        <span className="text-pink-400 mt-[3px] shrink-0">✦</span>
-                        <span>{bullet}</span>
+                      <li key={i} className="flex gap-2 text-xs sm:text-sm leading-relaxed text-gray-600">
+                        <span className="text-pink-400 mt-[2px] shrink-0 text-xs sm:text-sm">✦</span>
+                        <span className="break-words">{bullet}</span>
                       </li>
                     ))}
                   </ul>
@@ -339,16 +334,16 @@ export default function ExperienceSection() {
 
         {/* Achievements */}
         <div className="achievements-container">
-          <h3 className="font-semibold text-xl leading-[1.4] text-[#333333] mb-6">
+          <h3 className="font-semibold text-lg sm:text-xl leading-[1.4] text-[#333333] mb-4 sm:mb-6">
             Key Highlights &amp; Achievements
           </h3>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
             {achievements.map((a) => (
               <span
                 key={a.label}
-                className="achievement-badge px-4 py-2 bg-pink-50 text-pink-600 rounded-full font-semibold border border-pink-100 flex items-center gap-2 shadow-sm"
+                className="achievement-badge px-3 sm:px-4 py-1.5 sm:py-2 bg-pink-50 text-pink-600 rounded-full font-semibold text-xs sm:text-sm border border-pink-100 flex items-center gap-1.5 sm:gap-2 shadow-2xs"
               >
-                <span className="text-xs">{a.emoji}</span> {a.label}{" "}
+                <span className="text-xs sm:text-sm">{a.emoji}</span> {a.label}{" "}
                 <span className="text-pink-400 text-xs">{a.symbol}</span>
               </span>
             ))}

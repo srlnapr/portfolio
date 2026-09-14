@@ -13,7 +13,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex flex-col md:flex-row items-center gap-2 text-center md:text-left">
           <p className="font-semibold text-[13px] text-gray-500">
-            © 2024 helloserlin.id
+            © 2026 helloserlin.id
           </p>
           <span className="hidden md:inline text-gray-300">•</span>
           <p className="text-[13px] text-gray-400">
